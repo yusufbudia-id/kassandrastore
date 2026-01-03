@@ -8,6 +8,9 @@ import { Footer } from '@/components/Footer';
 import { Product } from '@/lib/products';
 import { useState } from 'react';
 
+export const dynamic = "force-dynamic"
+
+
 export default function KatalogPage() {
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get('search') || '';
