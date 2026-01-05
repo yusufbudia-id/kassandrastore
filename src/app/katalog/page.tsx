@@ -6,9 +6,10 @@ import { FullCatalog } from '@/components/FullCatalog';
 import { ProductDetailModal } from '@/components/ProductDetailModal';
 import { Footer } from '@/components/Footer';
 import { Product } from '@/lib/products';
-import { useState } from 'react';
+import { useState, Suspense } from 'react'; // Tambahkan import Suspense
 
-export default function KatalogPage() {
+// 1. Pindahkan logika utama ke komponen baru bernama KatalogContent
+function KatalogContent() {
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get('search') || '';
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
@@ -43,5 +44,15 @@ export default function KatalogPage() {
         onClose={handleModalClose}
       />
     </div>
+  );
+}
+
+// 2. Export default hanya berisi wrapper Suspense
+export default function KatalogPage() {
+  return (
+    // Fallback adalah tampilan loading sementara saat membaca URL
+    <Suspense fallback={<div className="min-h-screen bg-white pt-20 flex justify-center"><p>Memuat katalog...</p></div>}>
+      <KatalogContent />
+    </Suspense>
   );
 }
